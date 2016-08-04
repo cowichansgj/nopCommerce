@@ -8,16 +8,16 @@ namespace Nop.Plugin.ExternalAuth.Facebook
     {
         public void RegisterRoutes(RouteCollection routes)
         {
-            routes.MapRoute("Plugin.ExternalAuth.OpenIdConnect.Login",
-                 "Plugins/ExternalAuthOpenIdConnect/Login",
-                 new { controller = "ExternalAuthOpenIdConnect", action = "Login" },
-                 new[] { "Nop.Plugin.ExternalAuth.OpenIdConnect.Controllers" }
+            routes.MapRoute("Plugin.ExternalAuth.Facebook.Login",
+                 "Plugins/ExternalAuthFacebook/Login",
+                 new { controller = "ExternalAuthFacebook", action = "Login" },
+                 new[] { "Nop.Plugin.ExternalAuth.Facebook.Controllers" }
             );
 
-            routes.MapRoute("Plugin.ExternalAuth.OpenIdConnect.LoginCallback",
-                 "Plugins/ExternalAuthOpenIdConnect/LoginCallback",
-                 new { controller = "ExternalAuthOpenIdConnect", action = "LoginCallback" },
-                 new[] { "Nop.Plugin.ExternalAuth.OpenIdConnect.Controllers" }
+            routes.MapRoute("Plugin.ExternalAuth.Facebook.LoginCallback",
+                 "Plugins/ExternalAuthFacebook/LoginCallback",
+                 new { controller = "ExternalAuthFacebook", action = "LoginCallback" },
+                 new[] { "Nop.Plugin.ExternalAuth.Facebook.Controllers" }
             );
         }
         public int Priority
