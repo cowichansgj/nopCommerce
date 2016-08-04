@@ -1,0 +1,9 @@
+﻿Group: ExternalAuth methods
+FriendlyName: OpenID Connect
+SystemName: ExternalAuth.OpenIdConnect
+Version: 1.00
+SupportedVersions: 3.90
+Author: Scott Meyer
+DisplayOrder: 5
+FileName: Nop.Plugin.ExternalAuth.OpenIdConnect.dll
+Description: This plugin enables OpenId Connect authentication (login using and OpenId Connect Provider)
