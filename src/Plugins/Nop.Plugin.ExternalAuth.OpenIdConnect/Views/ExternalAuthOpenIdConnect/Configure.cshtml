@@ -14,12 +14,45 @@
             <div class="panel-body">
                 <div class="form-group">
                     <div class="col-md-3">
-                        @Html.OverrideStoreCheckboxFor(model => model.ClientKeyIdentifier_OverrideForStore, model => model.ClientKeyIdentifier, Model.ActiveStoreScopeConfiguration)
-                        @Html.NopLabelFor(model => model.ClientKeyIdentifier)
+                        @Html.OverrideStoreCheckboxFor(model => model.OpenIdConnectServer_OverrideForStore, model => model.OpenIdConnectServer, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.OpenIdConnectServer)
                     </div>
                     <div class="col-md-9">
-                        @Html.NopEditorFor(model => model.ClientKeyIdentifier)
-                        @Html.ValidationMessageFor(model => model.ClientKeyIdentifier)
+                        @Html.NopEditorFor(model => model.OpenIdConnectServer)
+                        @Html.ValidationMessageFor(model => model.OpenIdConnectServer)
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.RedirectUrl_OverrideForStore, model => model.RedirectUrl, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.RedirectUrl)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.NopEditorFor(model => model.RedirectUrl)
+                        @Html.ValidationMessageFor(model => model.RedirectUrl)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.LogoutRedirectUrl_OverrideForStore, model => model.LogoutRedirectUrl, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.LogoutRedirectUrl)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.NopEditorFor(model => model.LogoutRedirectUrl)
+                        @Html.ValidationMessageFor(model => model.LogoutRedirectUrl)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.ClientId_OverrideForStore, model => model.ClientId, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.ClientId)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.NopEditorFor(model => model.ClientId)
+                        @Html.ValidationMessageFor(model => model.ClientId)
                     </div>
                 </div>
                 <div class="form-group">

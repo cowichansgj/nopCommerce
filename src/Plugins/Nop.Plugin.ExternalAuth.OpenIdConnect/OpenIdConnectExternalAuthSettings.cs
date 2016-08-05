@@ -9,7 +9,10 @@ namespace Nop.Plugin.ExternalAuth.OpenIdConnect
 {
     public class OpenIdConnectExternalAuthSettings : ISettings
     {
-        public string ClientId { get; set; }
-        public string ClientSecret { get; set; }
+        public string OpenIdConnectServer { get; set; } = "http://localhost:5000/";
+        public string ClientId { get; set; } = "a2ba9cc";
+        public string ClientSecret { get; set; } = "4bb7d4e";
+        public string RedirectUrl { get; set; } = "http://localhost:15536/signin-oidc";
+        public string LogoutRedirectUrl { get; set; } = "http://localhost:15536/";
     }
 }
