@@ -12,8 +12,6 @@
     {
         Html.AppendCssFileParts(string.Format("~/Themes/{0}/Content/css/ie8.css", themeName));
     }
-
-
     //add main CSS file
     if (supportRtl)
     {
@@ -27,13 +25,14 @@
     //add jQuery UI css file
     Html.AppendCssFileParts("~/Content/jquery-ui-themes/smoothness/jquery-ui-1.10.3.custom.min.css");
 
-    Html.AppendCssFileParts(string.Format("~/Themes/{0}/Content/css/bootstrap.min.css", themeName));
-    Html.AppendCssFileParts(string.Format("~/Themes/{0}/Content/css/ie10-viewport-bug-workaround.css", themeName));
-    Html.AppendCssFileParts(string.Format("~/Themes/{0}/Content/css/theme.css", themeName));
+    Html.AppendCssFileParts(string.Format("~/Themes/{0}/Content/css/structure.css", themeName));
 
     if (browser.Browser == "IE" && browser.MajorVersion == 8)
     {
         Html.AddScriptParts("~/Scripts/selectivizr.min.js");
         Html.AddScriptParts("~/Scripts/respond.min.js");
+        Html.AddScriptParts(string.Format("~/Themes/{0}/Content/js/mootools-1.3.0.1-more-compat.js", themeName));
+        Html.AddScriptParts(string.Format("~/Themes/{0}/Content/js/moocarousel_v1.0.js", themeName));
+
     }
 }

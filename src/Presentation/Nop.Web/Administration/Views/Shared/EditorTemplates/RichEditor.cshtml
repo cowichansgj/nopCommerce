@@ -7,7 +7,7 @@
 
 @{
     //we do not bundle this script file (does not work for some reasons in bundle)
-    Html.AddScriptParts("~/Administration/Content/tinymce/tinymce.min.js", true);
+    Html.AddScriptParts("//cdn.tinymce.com/4/tinymce.min.js", true);
 
     var permissionService = EngineContext.Current.Resolve<IPermissionService>();
     var allowJbimages = false;
@@ -86,7 +86,8 @@
             }
             //we should set "convert_urls" set to "false" (because of "relative_urls" requirement)
             //otherwise, it'll break existing links when editing message template
-            convert_urls: false
+            convert_urls: false,
+            valid_children: "+body[style]"
         };
 
         function getAdditionalEditorSettings@(random)(settings) {
@@ -94,7 +95,7 @@
             return settings;
         }
 
-        tinyMCE.init(getAdditionalEditorSettings@(random)(defaultEditorSettings@(random)));
+        tinymce.init(getAdditionalEditorSettings@(random)(defaultEditorSettings@(random)));
     });
 </script>
 
