@@ -89,13 +89,19 @@
     <Compile Include="AutoMapperStartupTask.cs" />
     <Compile Include="Controllers\CommissionsProductExtensionController.cs" />
     <Compile Include="Data\CommissionsProductExtensionContext.cs" />
-    <Compile Include="Data\Mapping\ProductCommissionMapping.cs" />
+    <Compile Include="Data\Mapping\OrderCommissionMap.cs" />
+    <Compile Include="Data\Mapping\OrderItemCommissionMap.cs" />
+    <Compile Include="Data\Mapping\ProductCommissionMap.cs" />
+    <Compile Include="Domain\OrderCommission.cs" />
+    <Compile Include="Domain\OrderItemCommission.cs" />
     <Compile Include="Domain\ProductCommission.cs" />
+    <Compile Include="Events\OrderPlacedEventConsumer.cs" />
     <Compile Include="Models\ProductExtensionsModel.cs" />
     <Compile Include="ProductExtensionDependencyRegistrar.cs" />
     <Compile Include="ProductExtensionRouteProvider.cs" />
     <Compile Include="ProductExtensionWidget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\OrderCommissionService.cs" />
     <Compile Include="Services\ProductCommissionService.cs" />
   </ItemGroup>
   <ItemGroup>

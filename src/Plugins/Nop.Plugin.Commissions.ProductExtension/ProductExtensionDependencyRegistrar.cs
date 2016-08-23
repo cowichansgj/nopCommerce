@@ -31,7 +31,13 @@ namespace Nop.Plugin.Commissions.ProductExtension
 
         public void Register(ContainerBuilder builder, ITypeFinder typeFinder, NopConfig config)
         {
-            builder.RegisterType<CommissionsProductExtensionService>().As<ICommissionsProductExtensionService>().InstancePerLifetimeScope();
+            builder.RegisterType<ProductCommissionService>()
+                .As<IProductCommissionService>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<OrderCommissionService>()
+                .As<IOrderCommissionService>()
+                .InstancePerLifetimeScope();
 
             this.RegisterPluginDataContext<CommissionsProductExtensionContext>(builder, ContextName);
 
@@ -39,6 +45,17 @@ namespace Nop.Plugin.Commissions.ProductExtension
                 .As<IRepository<ProductCommission>>()
                 .WithParameter(ResolvedParameter.ForNamed<IDbContext>(ContextName))
                 .InstancePerLifetimeScope();
+
+            builder.RegisterType<EfRepository<OrderCommission>>()
+                .As<IRepository<OrderCommission>>()
+                .WithParameter(ResolvedParameter.ForNamed<IDbContext>(ContextName))
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<EfRepository<OrderItemCommission>>()
+                .As<IRepository<OrderItemCommission>>()
+                .WithParameter(ResolvedParameter.ForNamed<IDbContext>(ContextName))
+                .InstancePerLifetimeScope();
+
 
 
         }

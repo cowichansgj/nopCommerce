@@ -16,7 +16,9 @@ namespace Nop.Plugin.Commissions.ProductExtension.Data
         public CommissionsProductExtensionContext(string nameOrConnectionString) :base(nameOrConnectionString) { }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Configurations.Add(new ProductCommissionMapping());
+            modelBuilder.Configurations.Add(new ProductCommissionMap());
+            modelBuilder.Configurations.Add(new OrderCommissionMap());
+            modelBuilder.Configurations.Add(new OrderItemCommissionMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -40,7 +42,10 @@ namespace Nop.Plugin.Commissions.ProductExtension.Data
         {
             try
             {
-                var dbScript = "DROP TABLE ProductCommission";
+                var dbScript = @"
+                    DROP TABLE ProductCommission;
+                    DROP TABLE OrderItemCommission;
+                    DROP TABLE OrderCommission;";
                 Database.ExecuteSqlCommand(dbScript);
                 SaveChanges();
             }

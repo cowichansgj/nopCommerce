@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Nop.Plugin.Commissions.ProductExtension.Data.Mapping
 {
-    public class ProductCommissionMapping : NopEntityTypeConfiguration<ProductCommission>
+    public class ProductCommissionMap : NopEntityTypeConfiguration<ProductCommission>
     {
-        protected override void PostInitialize()
+        public ProductCommissionMap()
         {
             ToTable("ProductCommission");
             HasKey(p => p.Id);
@@ -19,9 +19,6 @@ namespace Nop.Plugin.Commissions.ProductExtension.Data.Mapping
             Property(p => p.PersonalVolume);
             Property(p => p.GroupVolume);
             Property(p => p.AdditionalVolume);
-
-            base.PostInitialize();
-
         }
     }
 }

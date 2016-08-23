@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Nop.Plugin.Commissions.ProductExtension.Services
 {
-    public interface ICommissionsProductExtensionService
+    public interface IProductCommissionService
     {
         ProductCommission GetProductCommissionById(int productId);
 
@@ -16,10 +16,10 @@ namespace Nop.Plugin.Commissions.ProductExtension.Services
         void UpdateProductCommission(ProductCommission entity);
     }
 
-    public class CommissionsProductExtensionService : ICommissionsProductExtensionService
+    public class ProductCommissionService : IProductCommissionService
     {
         private readonly IRepository<ProductCommission> _productCommissionRepository;
-        public CommissionsProductExtensionService(IRepository<ProductCommission> productCommissionRepository)
+        public ProductCommissionService(IRepository<ProductCommission> productCommissionRepository)
         {
             _productCommissionRepository = productCommissionRepository;
         }

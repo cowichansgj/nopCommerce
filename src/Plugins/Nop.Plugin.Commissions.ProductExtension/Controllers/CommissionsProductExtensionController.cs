@@ -13,8 +13,8 @@ namespace Nop.Plugin.Commissions.ProductExtension.Controllers
 {
     public class CommissionsProductExtensionController : Controller
     {
-        private readonly ICommissionsProductExtensionService _productExtensionService;
-        public CommissionsProductExtensionController(ICommissionsProductExtensionService productExtensionService)
+        private readonly IProductCommissionService _productExtensionService;
+        public CommissionsProductExtensionController(IProductCommissionService productExtensionService)
         {
             _productExtensionService = productExtensionService;
         }
