@@ -1,0 +1,9 @@
+﻿Group: Commissionable Product Extensions
+FriendlyName: Adds commission values to products
+SystemName: Commisssions.ProductExtension
+Version: 1.0
+SupportedVersions: 3.80
+Author: Scott Meyer
+DisplayOrder: 1
+FileName: Nop.Plugin.Commissions.ProductExtension.dll
+Description: This plugin allows you to assign commissionable volumes to products.

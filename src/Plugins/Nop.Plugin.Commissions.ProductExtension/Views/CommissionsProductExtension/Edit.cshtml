@@ -1,0 +1,70 @@
+﻿@using Nop.Web.Framework
+
+@model Nop.Plugin.Commissions.ProductExtension.Models.ProductExtensionsModel
+
+<script type="text/javascript">
+
+
+
+    $(function () {
+
+        $('#productExtension_updateCommissions').click(submitCommissionChanges);
+
+
+        function submitCommissionChanges(e) {
+            e.preventDefault();
+            var personalVolume = $('#@Html.FieldIdFor(m =>m.PersonalVolume)').val();
+            var groupVolume = $('#@Html.FieldIdFor(m =>m.GroupVolume)').val();
+            var additionalVolume = $('#@Html.FieldIdFor(m =>m.AdditionalVolume)').val();
+            var productId = @Model.ProductId;
+            $.ajax({
+                method: 'POST',
+                url: '@Url.RouteUrl("Plugin.Commissions.ProductExtension.UpdateExtensionProperties")',
+                data: {
+                    'productId' : productId,
+                    'personalVolume': personalVolume,
+                    'groupVolume': groupVolume,
+                    'additionalVolume': additionalVolume
+                },
+                success : function(data){
+                    alert('updated!')
+                }
+            });
+        }
+    });
+
+
+
+</script>
+    <div class="form-group">
+        <div class="col-md-3">
+            @Html.NopLabelFor(model => model.PersonalVolume)
+        </div>
+        <div class="col-md-9">
+            @Html.NopEditorFor(model => model.PersonalVolume)
+            @Html.ValidationMessageFor(model => model.PersonalVolume)
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-3">
+            @Html.NopLabelFor(model => model.GroupVolume)
+        </div>
+        <div class="col-md-9">
+            @Html.NopEditorFor(model => model.GroupVolume)
+            @Html.ValidationMessageFor(model => model.GroupVolume)
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-3">
+            @Html.NopLabelFor(model => model.AdditionalVolume)
+        </div>
+        <div class="col-md-4">
+            @Html.NopEditorFor(model => model.AdditionalVolume)
+            @Html.ValidationMessageFor(model => model.AdditionalVolume)
+        </div>
+        <div class="col-md-1">
+            <button id="productExtension_updateCommissions" class="btn btn-primary">Update Commissions</button>
+        </div>
+    </div>

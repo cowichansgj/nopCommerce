@@ -456,7 +456,7 @@
                             @Html.ValidationMessageFor(model => model.VisibleIndividually)
                         </div>
                     </div>
-
+                    @Html.Widget("commissions_product_attributes", Model.Id)
                     @(Html.LocalizedEditor<ProductModel, ProductLocalizedModel>("product-info-localized",
                     @<div>
                         <div class="form-group">
