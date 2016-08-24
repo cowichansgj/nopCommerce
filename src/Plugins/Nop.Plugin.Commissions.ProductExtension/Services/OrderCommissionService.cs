@@ -12,6 +12,9 @@ namespace Nop.Plugin.Commissions.ProductExtension.Services
     public interface IOrderCommissionService
     {
         void InsertOrderCommission(OrderCommission orderCommission);
+        void UpdateOrderCommission(OrderCommission orderCommission);
+
+        
     }
 
     public class OrderCommissionService : IOrderCommissionService
@@ -29,11 +32,11 @@ namespace Nop.Plugin.Commissions.ProductExtension.Services
         public void InsertOrderCommission(OrderCommission orderCommission)
         {
             _orderCommissionRepository.Insert(orderCommission);
-            
-            foreach(var item in (orderCommission.OrderItemCommissions))
-            {
-                _orderItemCommissionRepository.Insert(item);
-            }
+        }
+
+        public void UpdateOrderCommission(OrderCommission orderCommission)
+        {
+            _orderCommissionRepository.Update(orderCommission);
         }
     }
 }

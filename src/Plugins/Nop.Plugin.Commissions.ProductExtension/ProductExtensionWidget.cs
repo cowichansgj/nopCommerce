@@ -1,7 +1,10 @@
-﻿using Nop.Core.Plugins;
+﻿using Nop.Core.Domain.Catalog;
+using Nop.Core.Domain.Customers;
+using Nop.Core.Plugins;
 using Nop.Plugin.Commissions.ProductExtension.Data;
 using Nop.Services.Cms;
 using Nop.Services.Configuration;
+using Nop.Services.Customers;
 using Nop.Services.Localization;
 using System;
 using System.Collections.Generic;
@@ -15,9 +18,13 @@ namespace Nop.Plugin.Commissions.ProductExtension
     public class ProductExtensionWidget : BasePlugin, IWidgetPlugin
     {
         private readonly CommissionsProductExtensionContext _context;
-        public ProductExtensionWidget(CommissionsProductExtensionContext context)
+        private readonly ICustomerAttributeService _customerAttributeService;
+        public ProductExtensionWidget(
+            CommissionsProductExtensionContext context,
+            ICustomerAttributeService customerAttributeService)
         {
             _context = context;
+            _customerAttributeService = customerAttributeService;
         }
         public void GetConfigurationRoute(out string actionName, out string controllerName, out RouteValueDictionary routeValues)
         {
@@ -56,6 +63,29 @@ namespace Nop.Plugin.Commissions.ProductExtension
             this.AddOrUpdatePluginLocaleResource("Plugins.Commissions.ProductExtension.PersonalVolume", "Personal Volume");
             this.AddOrUpdatePluginLocaleResource("Plugins.Commissions.ProductExtension.GroupVolume", "Group Volume");
             this.AddOrUpdatePluginLocaleResource("Plugins.Commissions.ProductExtension.AdditionalVolume", "Additional Volume");
+
+            var allAttributes = _customerAttributeService.GetAllCustomerAttributes();
+
+            var existingSponsorId = allAttributes.FirstOrDefault(x => x.Name == "Sponsor ID");
+            var existingDistributorId = allAttributes.FirstOrDefault(x => x.Name == "Distributor ID");
+
+            if (existingSponsorId == null)
+            {
+                _customerAttributeService.InsertCustomerAttribute(new CustomerAttribute
+                {
+                    Name = "Sponsor ID",
+                    AttributeControlTypeId = (int)AttributeControlType.TextBox
+                });
+            }
+
+            if (existingDistributorId == null)
+            {
+                _customerAttributeService.InsertCustomerAttribute(new CustomerAttribute
+                {
+                    Name = "Distributor ID",
+                    AttributeControlTypeId = (int)AttributeControlType.TextBox
+                });
+            }
 
             base.Install();
         }

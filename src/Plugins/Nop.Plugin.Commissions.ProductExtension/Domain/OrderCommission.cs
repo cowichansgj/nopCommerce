@@ -13,6 +13,8 @@ namespace Nop.Plugin.Commissions.ProductExtension.Domain
         private ICollection<OrderItemCommission> _orderItems;
 
         public int CustomerId { get; set; }
+        public string SponsorId { get; set; }
+        public string DistributorId { get; set; }
         public int OrderId { get; set; }
         public Guid OrderGuid { get; set; }
         public decimal OrderSubTotalExclTax { get; set; }
