@@ -1,0 +1,29 @@
+@charset "utf-8";
+/*CSS Document */
+.clearfix{clear:both;display:block;}
+.text{ color:#555555;}
+
+/* carousel css*/
+.sprite_icon{background:url(/files/img/carousel-arrows.jpg) no-repeat;}
+.carousel_container_l, .carousel_container_r{display:block; margin:0 0 0 0 ; position: relative;height:120px;width:16px; float:left; cursor:pointer; } 
+.carousel_container_r{background-position: -16px -120px; } 
+.carousel_container_r:hover{background-position: -16px 0px; } 
+.carousel_container_l{background-position: 0 -120px; }
+.carousel_container_l:hover{background-position: 0 0px; } 
+
+/* carousal 1*/
+#carousel1_container{width:490px;  float:left;border:solid 0px red;}
+#carousel1_wrapper{overflow:hidden;margin:1px 2px 0px 1px; width:455px; position: relative; float:left;}
+#carousel1_items_container{margin:0px; padding:0px 0px; width:5000px;position: relative;  }
+.carousel1_items{background-color:#ffffff; width:110px; height:95px; border:1px solid #cfcfcf;margin:2px 1px 1px 1px; position:relative;float:left; text-align:center; overflow:hidden;}
+.carousel1_items img{margin:1px;border:none;}
+.carousel1_items .text{margin-top:-3px;font-size:9px;width:108px;height:25px;}
+#carousel1_header_container{margin-left:-1px; padding:0px 0px; width:5000px;position: relative; float:left; height:20px;}
+.carousel1_header{background-color:#ffffff; width:450px;border:1px solid #cfcfcf;padding:0 0 3px 1px; margin:1px 1px 1px 2px;float:left;position:relative; text-align:left;}
+.carousel1_header .text{font-size:12px;font-weight:bold;}
+
+/* carousel paging css*/
+.carousel_paging {float:right;margin:-130px 18px 0 0;}
+.carousel_paging .current, .carousel_paging .page{width:7px; height:7px;font-size:1px;border:solid 1px #ababab;text-align:center; display:block; float:left;color:#ffffff; background-color:#ffffff; margin:0 2px 0 0; text-decoration:none;}
+.carousel_paging a:hover, .carousel_paging .current{background-color:#6f6f6f; color:#555555; width:7px; height:7px;}
+
