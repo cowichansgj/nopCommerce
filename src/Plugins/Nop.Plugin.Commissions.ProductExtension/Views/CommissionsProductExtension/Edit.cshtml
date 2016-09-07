@@ -8,32 +8,35 @@
 
     $(function () {
 
-        $('#productExtension_updateCommissions').click(submitCommissionChanges);
+        $("[name='save'],[name='save-continue']").on('click', submitCommissionChanges);
 
+        function submitCommissionChanges(e, options) {
+            options = options || {};
 
-        function submitCommissionChanges(e) {
-            e.preventDefault();
-            var personalVolume = $('#@Html.FieldIdFor(m =>m.PersonalVolume)').val();
-            var groupVolume = $('#@Html.FieldIdFor(m =>m.GroupVolume)').val();
-            var additionalVolume = $('#@Html.FieldIdFor(m =>m.AdditionalVolume)').val();
-            var productId = @Model.ProductId;
-            $.ajax({
-                method: 'POST',
-                url: '@Url.RouteUrl("Plugin.Commissions.ProductExtension.UpdateExtensionProperties")',
-                data: {
-                    'productId' : productId,
-                    'personalVolume': personalVolume,
-                    'groupVolume': groupVolume,
-                    'additionalVolume': additionalVolume
-                },
-                success : function(data){
-                    alert('updated!')
-                }
-            });
+            if(!options.commissionsUpdated)
+            {
+                e.preventDefault();
+                var personalVolume = $('#@Html.FieldIdFor(m =>m.PersonalVolume)').val();
+                var groupVolume = $('#@Html.FieldIdFor(m =>m.GroupVolume)').val();
+                var additionalVolume = $('#@Html.FieldIdFor(m =>m.AdditionalVolume)').val();
+                var productId = @Model.ProductId;
+
+                $.ajax({
+                    method: 'POST',
+                    url: '@Url.RouteUrl("Plugin.Commissions.ProductExtension.UpdateExtensionProperties")',
+                    data: {
+                        'productId' : productId,
+                        'personalVolume': personalVolume,
+                        'groupVolume': groupVolume,
+                        'additionalVolume': additionalVolume
+                    },
+                    success : function(data){
+                        $(e.currentTarget).trigger('click', {commissionsUpdated: true});
+                    }
+                });
+            }
         }
     });
-
-
 
 </script>
     <div class="form-group">
@@ -63,8 +66,5 @@
         <div class="col-md-4">
             @Html.NopEditorFor(model => model.AdditionalVolume)
             @Html.ValidationMessageFor(model => model.AdditionalVolume)
-        </div>
-        <div class="col-md-1">
-            <button id="productExtension_updateCommissions" class="btn btn-primary">Update Commissions</button>
         </div>
     </div>

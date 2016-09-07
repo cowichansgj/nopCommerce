@@ -9,7 +9,7 @@ namespace Nop.Plugin.Commissions.ProductExtension.Models
 {
     public class ProductExtensionsModel
     {
-        [NopResourceDisplayName("Plugins.Commissions.ProductExtension.PesonalVolume")]
+        [NopResourceDisplayName("Plugins.Commissions.ProductExtension.PersonalVolume")]
         public decimal PersonalVolume { get; set; }
 
         [NopResourceDisplayName("Plugins.Commissions.ProductExtension.GroupVolume")]

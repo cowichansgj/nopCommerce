@@ -2,6 +2,7 @@
 using Nop.Plugin.Commissions.ProductExtension.Domain;
 using Nop.Plugin.Commissions.ProductExtension.Models;
 using Nop.Plugin.Commissions.ProductExtension.Services;
+using Nop.Web.Framework.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Web.Mvc;
 
 namespace Nop.Plugin.Commissions.ProductExtension.Controllers
 {
-    public class CommissionsProductExtensionController : Controller
+    public class CommissionsProductExtensionController : BaseController
     {
         private readonly IProductCommissionService _productExtensionService;
         public CommissionsProductExtensionController(IProductCommissionService productExtensionService)
