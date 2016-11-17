@@ -91,6 +91,10 @@ namespace Nop.Plugin.Commissions.ProductExtension.Events
                         PriceExclTax = orderItem.PriceExclTax,
                         UnitPriceExclTax = orderItem.UnitPriceExclTax
                     };
+
+                    orderItemCommission.PersonalVolumeTotal = orderItemCommission.PriceExclTax * orderItemCommission.PersonalVolume;
+                    orderItemCommission.GroupVolumeTotal = orderItemCommission.PriceExclTax * orderItemCommission.GroupVolume;
+
                     orderCommission.OrderItemCommissions.Add(orderItemCommission);
 
                     _orderCommissionService.UpdateOrderCommission(orderCommission);
