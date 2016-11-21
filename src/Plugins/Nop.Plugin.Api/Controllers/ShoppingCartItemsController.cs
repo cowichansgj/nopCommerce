@@ -30,7 +30,7 @@ using Nop.Services.Stores;
 
 namespace Nop.Plugin.Api.Controllers
 {
-    [BearerTokenAuthorize]
+    [Authorize]
     public class ShoppingCartItemsController : BaseApiController
     {
         private readonly IShoppingCartItemApiService _shoppingCartItemApiService;

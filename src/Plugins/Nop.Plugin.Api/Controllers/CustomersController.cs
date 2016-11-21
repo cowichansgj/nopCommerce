@@ -33,7 +33,7 @@ using Nop.Services.Stores;
 
 namespace Nop.Plugin.Api.Controllers
 {
-    [BearerTokenAuthorize]
+    [Authorize]
     public class CustomersController : BaseApiController
     {
         private readonly ICustomerApiService _customerApiService;

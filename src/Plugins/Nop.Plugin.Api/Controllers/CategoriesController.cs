@@ -32,7 +32,7 @@ using Nop.Services.Stores;
 
 namespace Nop.Plugin.Api.Controllers
 {
-    [BearerTokenAuthorize]
+    [Authorize]
     public class CategoriesController : BaseApiController
     {
         private readonly ICategoryApiService _categoryApiService;

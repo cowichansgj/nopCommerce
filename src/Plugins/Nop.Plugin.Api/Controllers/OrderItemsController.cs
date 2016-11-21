@@ -29,7 +29,7 @@ using Nop.Services.Tax;
 
 namespace Nop.Plugin.Api.Controllers
 {
-    [BearerTokenAuthorize]
+    [Authorize]
     public class OrderItemsController : BaseApiController
     {
         private readonly IOrderItemApiService _orderItemApiService;

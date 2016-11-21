@@ -10,6 +10,7 @@ using Nop.Services.Localization;
 using Nop.Services.Logging;
 using Nop.Services.Stores;
 using Nop.Web.Framework.Controllers;
+using System;
 
 namespace Nop.Plugin.Api.Controllers.Admin
 {
@@ -48,6 +49,15 @@ namespace Nop.Plugin.Api.Controllers.Admin
             // Store Settings
             model.ActiveStoreScopeConfiguration = storeScope;
 
+            if (model.Authority_OverrideForStore || storeScope == 0)
+                _settingService.SaveSetting(apiSettings, x => x.Authority, storeScope, false);
+
+            if (model.ClientId_OverrideForStore || storeScope == 0)
+                _settingService.SaveSetting(apiSettings, x => x.ClientId, storeScope, false);
+
+            if (model.ClientSecret_OverrideForStore || storeScope == 0)
+                _settingService.SaveSetting(apiSettings, x => x.ClientSecret, storeScope, false);
+
             if (model.EnableApi_OverrideForStore || storeScope == 0)
                 _settingService.SaveSetting(apiSettings, x => x.EnableApi, storeScope, false);
             if (model.AllowRequestsFromSwagger_OverrideForStore || storeScope == 0)
@@ -70,6 +80,15 @@ namespace Nop.Plugin.Api.Controllers.Admin
             /* We do not clear cache after each setting update.
             * This behavior can increase performance because cached settings will not be cleared 
             * and loaded from database after each update */
+
+            if (configurationModel.Authority_OverrideForStore || storeScope == 0)
+                _settingService.SaveSetting(settings, x => x.Authority, storeScope, false);
+
+            if (configurationModel.ClientId_OverrideForStore || storeScope == 0)
+                _settingService.SaveSetting(settings, x => x.ClientId, storeScope, false);
+
+            if (configurationModel.ClientSecret_OverrideForStore || storeScope == 0)
+                _settingService.SaveSetting(settings, x => x.ClientSecret, storeScope, false);
 
             if (configurationModel.EnableApi_OverrideForStore || storeScope == 0)
                 _settingService.SaveSetting(settings, x => x.EnableApi, storeScope, false);

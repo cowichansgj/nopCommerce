@@ -16,6 +16,11 @@ using Nop.Plugin.Api.Owin.OAuth.Providers;
 using Nop.Plugin.Api.Swagger;
 using Owin;
 using Swashbuckle.Application;
+using Owin.Security.OAuth.Introspection;
+using Microsoft.Owin.Security;
+using System.Threading.Tasks;
+using System.IO;
+using Nop.Plugin.Api.Domain;
 
 namespace Nop.Plugin.Api
 {
@@ -27,33 +32,43 @@ namespace Nop.Plugin.Api
 
             ConfigureOAuth(app);
 
-            app.UseStageMarker(PipelineStage.PostAuthenticate);
+            //app.UseStageMarker(PipelineStage.PostAuthenticate);
 
             ConfigureWebApi(app);
         }
 
         private void ConfigureOAuth(IAppBuilder app)
         {
-            // The token endpoint path activates the ValidateClientAuthentication method from the AuthorisationServerProvider.
-            var oAuthServerOptions = new OAuthAuthorizationServerOptions()
+            var settings = EngineContext.Current.Resolve<ApiSettings>();
+            app.UseOAuthIntrospection(new OAuthIntrospectionOptions
             {
-                AllowInsecureHttp = true,
-                TokenEndpointPath = new PathString("/api/token"),
-                AuthorizeEndpointPath = new PathString("/OAuth/Authorize"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(Configurations.AccessTokenExpirationMinutes),
-                Provider = new AuthorisationServerProvider(),
-                AuthorizationCodeProvider = new AuthenticationTokenProvider(),
-                RefreshTokenProvider = new RefreshTokenProvider(),
-                ApplicationCanDisplayErrors = true
-            };
-            app.UseOAuthAuthorizationServer(oAuthServerOptions);
+                AuthenticationMode = AuthenticationMode.Active,
+                SaveToken = true,
+                Authority = settings.Authority ?? "http://localhost:5000",
+                ClientId = settings.ClientId ?? "MyClient",
+                ClientSecret = settings.ClientSecret ?? "MyClientSecret",
+                Events = new OAuthIntrospectionEvents
+                {
+                    OnCreateTicket = context =>
+                    {
+                        var s = context.Payload;
+                        return Task.FromResult(0);
+                    },
+                    OnValidateToken = context =>
+                    {
+                        return Task.FromResult(0);
+                    },
+                    OnRequestTokenIntrospection = context =>
+                    {
+                        return Task.FromResult(0);  
+                    },
+                    OnRetrieveToken = context =>
+                    {
 
-
-            // Our own middleware that resets the current user set by the Forms authentication in case we have a Bearer token request
-            app.Use(typeof(BearerTokenMiddleware));
-
-            // This middleware should be called after the BearerTokenMiddleware
-            app.Use(typeof(OAuthBearerAuthenticationMiddleware), app, new OAuthBearerAuthenticationOptions());
+                        return Task.FromResult(0);
+                    }
+                }
+            });
         }
 
         private void ConfigureWebApi(IAppBuilder app)
@@ -66,11 +81,6 @@ namespace Nop.Plugin.Api
             {
                 NullValueHandling = NullValueHandling.Ignore
             };
-
-            config.Routes.MapHttpRoute(
-                name: "authorizeApi",
-                routeTemplate: "OAuth/Authorize",
-                defaults: new { controller = "OAuth", action = "Authorize" });
 
             config.Routes.MapHttpRoute(
               name: "customers",

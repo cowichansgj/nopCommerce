@@ -1,0 +1,217 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Owin.Security.OAuth.Introspection</name>
+    </assembly>
+    <members>
+        <member name="F:Owin.Security.OAuth.Introspection.OAuthIntrospectionDefaults.AuthenticationScheme">
+            <summary>
+            Gets the default scheme used by the introspection middleware.
+            </summary>
+        </member>
+        <member name="T:Owin.Security.OAuth.Introspection.OAuthIntrospectionEvents">
+            <summary>
+            Allows customization of introspection handling within the middleware.
+            </summary>
+        </member>
+        <member name="P:Owin.Security.OAuth.Introspection.OAuthIntrospectionEvents.OnCreateTicket">
+            <summary>
+            Invoked when a ticket is to be created from an introspection response.
+            </summary>
+        </member>
+        <member name="P:Owin.Security.OAuth.Introspection.OAuthIntrospectionEvents.OnRetrieveToken">
+            <summary>
+            Invoked when a token is to be parsed from a newly-received request.
+            </summary>
+        </member>
+        <member name="P:Owin.Security.OAuth.Introspection.OAuthIntrospectionEvents.OnRequestTokenIntrospection">
+            <summary>
+            Invoked when a token is to be sent to the authorization server for introspection.
+            </summary>
+        </member>
+        <member name="P:Owin.Security.OAuth.Introspection.OAuthIntrospectionEvents.OnValidateToken">
+            <summary>
+            Invoked when a token is to be validated, before final processing.
+            </summary>
+        </member>
+        <member name="M:Owin.Security.OAuth.Introspection.OAuthIntrospectionEvents.CreateTicket(Owin.Security.OAuth.Introspection.CreateTicketContext)">
+            <summary>
+            Invoked when a ticket is to be created from an introspection response.
+            </summary>
+        </member>
+        <member name="M:Owin.Security.OAuth.Introspection.OAuthIntrospectionEvents.RetrieveToken(Owin.Security.OAuth.Introspection.RetrieveTokenContext)">
+            <summary>
+            Invoked when a token is to be parsed from a newly-received request.
+            </summary>
+        </member>
+        <member name="M:Owin.Security.OAuth.Introspection.OAuthIntrospectionEvents.RequestTokenIntrospection(Owin.Security.OAuth.Introspection.RequestTokenIntrospectionContext)">
+            <summary>
+            Invoked when a token is to be sent to the authorization server for introspection.
+            </summary>
+        </member>
+        <member name="M:Owin.Security.OAuth.Introspection.OAuthIntrospectionEvents.ValidateToken(Owin.Security.OAuth.Introspection.ValidateTokenContext)">
+            <summary>
+            Invoked when a token is to be validated, before final processing.
+            </summary>
+        </member>
+        <member name="P:Owin.Security.OAuth.Introspection.OAuthIntrospectionOptions.Audiences">
+            <summary>
+            Gets or sets the intended audiences of this resource server.
+            Setting this property is recommended when the authorization
+            server issues access tokens for multiple distinct resource servers.
+            </summary>
+        </member>
+        <member name="P:Owin.Security.OAuth.Introspection.OAuthIntrospectionOptions.Authority">
+            <summary>
+            Gets or sets the base address of the OAuth2/OpenID Connect server.
+            </summary>
+        </member>
+        <member name="P:Owin.Security.OAuth.Introspection.OAuthIntrospectionOptions.IntrospectionEndpoint">
+            <summary>
+            Gets or sets the address of the introspection endpoint.
+            </summary>
+        </member>
+        <member name="P:Owin.Security.OAuth.Introspection.OAuthIntrospectionOptions.ClientId">
+            <summary>
+            Gets or sets the client identifier representing the resource server.
+            </summary>
+        </member>
+        <member name="P:Owin.Security.OAuth.Introspection.OAuthIntrospectionOptions.ClientSecret">
+            <summary>
+            Gets or sets the client secret used to
+            communicate with the introspection endpoint.
+            </summary>
+        </member>
+        <member name="P:Owin.Security.OAuth.Introspection.OAuthIntrospectionOptions.SaveToken">
+            <summary>
+            Gets or sets a boolean determining whether the access token should be stored in the
+            <see cref="T:Microsoft.Owin.Security.AuthenticationProperties"/> after a successful authentication process.
+            </summary>
+        </member>
+        <member name="P:Owin.Security.OAuth.Introspection.OAuthIntrospectionOptions.Cache">
+            <summary>
+            Gets or sets the cache used to store the authentication tickets
+            resolved from the access tokens received by the resource server.
+            </summary>
+        </member>
+        <member name="P:Owin.Security.OAuth.Introspection.OAuthIntrospectionOptions.Events">
+            <summary>
+            Gets or sets the object provided by the application to process events raised by the authentication middleware.
+            The application may implement the interface fully, or it may create an instance of
+            <see cref="T:Owin.Security.OAuth.Introspection.OAuthIntrospectionEvents"/> and assign delegates only to the events it wants to process.
+            </summary>
+        </member>
+        <member name="P:Owin.Security.OAuth.Introspection.OAuthIntrospectionOptions.HttpClient">
+            <summary>
+            Gets or sets the HTTP client used to communicate
+            with the remote OAuth2/OpenID Connect server.
+            </summary>
+        </member>
+        <member name="P:Owin.Security.OAuth.Introspection.OAuthIntrospectionOptions.Logger">
+            <summary>
+            Gets or sets the logger used by <see cref="T:Owin.Security.OAuth.Introspection.OAuthIntrospectionMiddleware"/>.
+            When unassigned, a default instance is created using the logger factory.
+            </summary>
+        </member>
+        <member name="P:Owin.Security.OAuth.Introspection.OAuthIntrospectionOptions.SystemClock">
+            <summary>
+            Gets or sets the clock used to determine the current date/time.
+            </summary>
+        </member>
+        <member name="P:Owin.Security.OAuth.Introspection.OAuthIntrospectionOptions.AccessTokenFormat">
+            <summary>
+            Gets or sets the data format used to serialize and deserialize
+            the authenticated tickets stored in the distributed cache.
+            </summary>
+        </member>
+        <member name="P:Owin.Security.OAuth.Introspection.OAuthIntrospectionOptions.DataProtectionProvider">
+            <summary>
+            Gets or sets the data protection provider used to create the default
+            data protectors used by <see cref="T:Owin.Security.OAuth.Introspection.OAuthIntrospectionMiddleware"/>.
+            </summary>
+        </member>
+        <member name="T:Owin.Security.OAuth.Introspection.CreateTicketContext">
+            <summary>
+            Allows interception of the AuthenticationTicket creation process.
+            </summary>
+        </member>
+        <member name="P:Owin.Security.OAuth.Introspection.CreateTicketContext.Payload">
+            <summary>
+            Gets the payload extracted from the introspection response.
+            </summary>
+        </member>
+        <member name="P:Owin.Security.OAuth.Introspection.CreateTicketContext.Ticket">
+            <summary>
+            Gets or sets the <see cref="T:Microsoft.Owin.Security.AuthenticationTicket"/> created by the application.
+            </summary>
+        </member>
+        <member name="T:Owin.Security.OAuth.Introspection.RequestTokenIntrospectionContext">
+            <summary>
+            Allows for custom handling of the call to the Authorization Server's Introspection endpoint.
+            </summary>
+        </member>
+        <member name="P:Owin.Security.OAuth.Introspection.RequestTokenIntrospectionContext.Client">
+            <summary>
+            An <see cref="T:System.Net.Http.HttpClient"/> for use by the application to call the authorization server.
+            </summary>
+        </member>
+        <member name="P:Owin.Security.OAuth.Introspection.RequestTokenIntrospectionContext.Message">
+            <summary>
+            Gets the HTTP message sent to the introspection endpoint.
+            </summary>
+        </member>
+        <member name="P:Owin.Security.OAuth.Introspection.RequestTokenIntrospectionContext.Token">
+            <summary>
+            The access token parsed from the client request.
+            </summary>
+        </member>
+        <member name="T:Owin.Security.OAuth.Introspection.RetrieveTokenContext">
+            <summary>
+            Allows custom parsing of access tokens from requests.
+            </summary>
+        </member>
+        <member name="P:Owin.Security.OAuth.Introspection.RetrieveTokenContext.Token">
+            <summary>
+            Gets or sets the access token.
+            </summary>
+        </member>
+        <member name="P:Owin.Security.OAuth.Introspection.RetrieveTokenContext.Ticket">
+            <summary>
+            Gets or sets the <see cref="T:Microsoft.Owin.Security.AuthenticationTicket"/> created by the application.
+            </summary>
+        </member>
+        <member name="T:Owin.Security.OAuth.Introspection.ValidateTokenContext">
+            <summary>
+            Allows customization of the token validation logic.
+            </summary>
+        </member>
+        <member name="P:Owin.Security.OAuth.Introspection.ValidateTokenContext.Ticket">
+            <summary>
+            Gets or sets the <see cref="T:Microsoft.Owin.Security.AuthenticationTicket"/>
+            created from the introspection response.
+            </summary>
+        </member>
+        <member name="T:Owin.OAuthIntrospectionExtensions">
+            <summary>
+            Provides extension methods used to configure the OAuth2
+            introspection middleware in an OWIN/Katana pipeline.
+            </summary>
+        </member>
+        <member name="M:Owin.OAuthIntrospectionExtensions.UseOAuthIntrospection(Owin.IAppBuilder,System.Action{Owin.Security.OAuth.Introspection.OAuthIntrospectionOptions})">
+            <summary>
+            Adds a new instance of the OAuth2 introspection middleware in the OWIN/Katana pipeline.
+            </summary>
+            <param name="app">The application builder.</param>
+            <param name="configuration">The delegate used to configure the introspection options.</param>
+            <returns>The application builder.</returns>
+        </member>
+        <member name="M:Owin.OAuthIntrospectionExtensions.UseOAuthIntrospection(Owin.IAppBuilder,Owin.Security.OAuth.Introspection.OAuthIntrospectionOptions)">
+            <summary>
+            Adds a new instance of the OAuth2 introspection middleware in the OWIN/Katana pipeline.
+            </summary>
+            <param name="app">The application builder.</param>
+            <param name="options">The options used to configure the introspection middleware.</param>
+            <returns>The application builder.</returns>
+        </member>
+    </members>
+</doc>

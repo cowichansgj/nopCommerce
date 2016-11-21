@@ -40,7 +40,7 @@ using Nop.Services.Stores;
 
 namespace Nop.Plugin.Api.Controllers
 {
-    [BearerTokenAuthorize]
+    [Authorize]
     public class OrdersController : BaseApiController
     {
         private readonly IOrderApiService _orderApiService;

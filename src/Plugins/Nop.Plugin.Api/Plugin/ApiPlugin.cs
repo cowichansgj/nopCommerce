@@ -9,6 +9,7 @@ using Nop.Services.Common;
 using Nop.Services.Configuration;
 using Nop.Web.Framework.Menu;
 using Nop.Services.Localization;
+using Nop.Plugin.Api.Domain;
 
 namespace Nop.Plugin.Api.Plugin
 {
@@ -21,6 +22,7 @@ namespace Nop.Plugin.Api.Plugin
         private ILocalizationService _localizationService;
         private IWebHelper _webHelper;
         private IWorkContext _workContext;
+        private ISettingService _settingsService;
 
         protected ILocalizationService LocalizationService
         {
@@ -61,21 +63,33 @@ namespace Nop.Plugin.Api.Plugin
             }
         }
 
-        public ApiPlugin(ApiObjectContext objectContext, IWebConfigMangerHelper webConfigMangerHelper)
+        public ApiPlugin(ApiObjectContext objectContext, IWebConfigMangerHelper webConfigMangerHelper, ISettingService settingsService)
         {
             _objectContext = objectContext;
             _webConfigMangerHelper = webConfigMangerHelper;
+            _settingsService = settingsService;
         }
 
         public override void Install()
         {
             _objectContext.Install();
 
+            _settingsService.SaveSetting(new ApiSettings()
+            {
+                Authority = "http://localhost:5000",
+                ClientId = "nopCommerce",
+                ClientSecret = "MyClientSecret"
+            });
+
             //locales
             this.AddOrUpdatePluginLocaleResource("Plugins.Api", "Api plugin");
             this.AddOrUpdatePluginLocaleResource("Plugins.Api.Admin.Menu.ManageClients", "Manage Api Clients");
             this.AddOrUpdatePluginLocaleResource("Plugins.Api.Admin.Configure", "Configure Web Api");
             this.AddOrUpdatePluginLocaleResource("Plugins.Api.Admin.GeneralSettings", "General Settings");
+
+            this.AddOrUpdatePluginLocaleResource("Plugins.Api.Admin.Authority", "OAuth Authority");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Api.Admin.EnableApi.Hint", "The address of the OAuth authorization authority.");
+
             this.AddOrUpdatePluginLocaleResource("Plugins.Api.Admin.EnableApi", "Enable Api");
             this.AddOrUpdatePluginLocaleResource("Plugins.Api.Admin.EnableApi.Hint", "By checking this settings you can Enable/Disable the Web Api");
             this.AddOrUpdatePluginLocaleResource("Plugins.Api.Admin.AllowRequestsFromSwagger", "Allow Requests From Swagger");
