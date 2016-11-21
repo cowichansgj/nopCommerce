@@ -1,0 +1,9 @@
+﻿Group: Orders
+FriendlyName: Party Orders
+SystemName: Orders.Parties
+Version: 0.1
+SupportedVersions: 3.80
+Author: Chris Coulter
+DisplayOrder: 1
+FileName: Nop.Plugin.Orders.Parties.dll
+Description: This plugin adds tracking for party order association.
