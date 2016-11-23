@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Web.Http;
-using System.Web.Http.Description;
-using System.Web.Http.ModelBinding;
-using FluentValidation.Results;
+﻿using FluentValidation.Results;
 using Nop.Core;
 using Nop.Core.Domain.Catalog;
+using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Shipping;
@@ -37,6 +31,13 @@ using Nop.Services.Payments;
 using Nop.Services.Security;
 using Nop.Services.Shipping;
 using Nop.Services.Stores;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Web.Http;
+using System.Web.Http.Description;
+using System.Web.Http.ModelBinding;
 
 namespace Nop.Plugin.Api.Controllers
 {
@@ -125,12 +126,22 @@ namespace Nop.Plugin.Api.Controllers
             IList<OrderDto> ordersAsDtos = _orderApiService.GetOrders(parameters.Ids, parameters.CreatedAtMin, parameters.CreatedAtMax,
                                                                       parameters.Limit, parameters.Page, parameters.SinceId,
                                                                       parameters.Status, parameters.PaymentStatus, parameters.ShippingStatus,
-                                                                      parameters.CustomerId).Select(x => x.ToDto()).ToList();
+                                                                      parameters.CustomerId, parameters.PartyId).Select(x => x.ToDto()).ToList();
+
+            foreach (var order in ordersAsDtos)
+            {
+                order.PartyId = GetPartyId(Convert.ToInt32(order.Id));
+            }
 
             var ordersRootObject = new OrdersRootObject()
             {
                 Orders = ordersAsDtos
             };
+
+            if (parameters.PartyId > 0)
+            {
+                ordersRootObject.Orders = ordersRootObject.Orders.Where(o => o.PartyId == parameters.PartyId).ToList();
+            }
 
             var json = _jsonFieldsSerializer.Serialize(ordersRootObject, parameters.Fields);
 
@@ -186,6 +197,7 @@ namespace Nop.Plugin.Api.Controllers
             var ordersRootObject = new OrdersRootObject();
 
             OrderDto orderDto = order.ToDto();
+            orderDto.PartyId = GetPartyId(order.Id);
             ordersRootObject.Orders.Add(orderDto);
 
             var json = _jsonFieldsSerializer.Serialize(ordersRootObject, fields);
@@ -205,6 +217,11 @@ namespace Nop.Plugin.Api.Controllers
         public IHttpActionResult GetOrdersByCustomerId(int customer_id)
         {
             IList<OrderDto> ordersForCustomer = _orderApiService.GetOrdersByCustomerId(customer_id).Select(x => x.ToDto()).ToList();
+
+            foreach (var order in ordersForCustomer)
+            {
+                order.PartyId = GetPartyId(Convert.ToInt32(order.Id));
+            }
 
             var ordersRootObject = new OrdersRootObject()
             {
@@ -309,12 +326,26 @@ namespace Nop.Plugin.Api.Controllers
                 return Error(HttpStatusCode.BadRequest);
             }
 
+            // if order is associated with party, add generic attribute for association
+            if (orderDelta.Dto.PartyId > 0)
+            {
+                _genericAttributeService.InsertAttribute(new GenericAttribute
+                {
+                    EntityId = placeOrderResult.PlacedOrder.Id,
+                    Key = "PartyId",
+                    KeyGroup = "Order",
+                    Value = orderDelta.Dto.PartyId.ToString(),
+                    StoreId = placeOrderResult.PlacedOrder.StoreId
+                });
+            }
+
             _customerActivityService.InsertActivity("AddNewOrder",
                  _localizationService.GetResource("ActivityLog.AddNewOrder"), newOrder.Id);
 
             var ordersRootObject = new OrdersRootObject();
 
             OrderDto placedOrderDto = placeOrderResult.PlacedOrder.ToDto();
+            placedOrderDto.PartyId = orderDelta.Dto.PartyId;
 
             ordersRootObject.Orders.Add(placedOrderDto);
 
@@ -340,6 +371,8 @@ namespace Nop.Plugin.Api.Controllers
             }
 
             _orderProcessingService.DeleteOrder(orderToDelete);
+            var attributes = _genericAttributeService.GetAttributesForEntity(orderToDelete.Id, "Order");
+            _genericAttributeService.DeleteAttributes(attributes);
 
             //activity log
             _customerActivityService.InsertActivity("DeleteOrder", _localizationService.GetResource("ActivityLog.DeleteOrder"), orderToDelete.Id);
@@ -409,8 +442,24 @@ namespace Nop.Plugin.Api.Controllers
             }
 
             orderDelta.Merge(currentOrder);
+
+            // overwrite existing party id attributes
+            var partyIdAttribute = _genericAttributeService
+                .GetAttributesForEntity(currentOrder.Id, "Order")
+                .Where(a => a.Key.Equals("PartyId", StringComparison.InvariantCultureIgnoreCase))
+                .ToList();
+            _genericAttributeService.DeleteAttributes(partyIdAttribute);
+
+            if (orderDelta.Dto.PartyId > 0)
+                _genericAttributeService.InsertAttribute(new GenericAttribute
+                {
+                    EntityId = currentOrder.Id,
+                    KeyGroup = "Order",
+                    Key = "PartyId",
+                    StoreId = currentOrder.StoreId,
+                    Value = orderDelta.Dto.PartyId.ToString()
+                });
             
-            customer.BillingAddress = currentOrder.BillingAddress;
             customer.ShippingAddress = currentOrder.ShippingAddress;
 
             _orderService.UpdateOrder(currentOrder);
@@ -633,6 +682,18 @@ namespace Nop.Plugin.Api.Controllers
             }
 
             return addressValid;
+        }
+
+        private int GetPartyId(int orderId)
+        {
+            var attributes = _genericAttributeService.GetAttributesForEntity(orderId, "Order");
+            if (attributes == null)
+                return 0;
+
+            var partyId = attributes.FirstOrDefault(t =>
+                t.Key.Equals("PartyId", StringComparison.InvariantCultureIgnoreCase));
+
+            return partyId != null ? Convert.ToInt32(partyId.Value) : 0;
         }
     }
 }

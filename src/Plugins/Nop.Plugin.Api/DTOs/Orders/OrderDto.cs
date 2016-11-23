@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using FluentValidation.Attributes;
+﻿using FluentValidation.Attributes;
 using Newtonsoft.Json;
 using Nop.Plugin.Api.DTOs.Customers;
 using Nop.Plugin.Api.DTOs.OrderItems;
 using Nop.Plugin.Api.Validators;
+using System;
+using System.Collections.Generic;
 
 namespace Nop.Plugin.Api.DTOs.Orders
 {
@@ -292,5 +292,11 @@ namespace Nop.Plugin.Api.DTOs.Orders
         /// </summary>
         [JsonProperty("customer_tax_display_type")]
         public string CustomerTaxDisplayType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the party id for the order (custom attribute)
+        /// </summary>
+        [JsonProperty("party_id")]
+        public int PartyId { get; set; }
     }
 }
