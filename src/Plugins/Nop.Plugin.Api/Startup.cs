@@ -5,23 +5,21 @@ using System.Reflection;
 using System.Web.Http;
 using System.Web.Http.Routing;
 using Autofac.Integration.WebApi;
-using Microsoft.Owin;
-using Microsoft.Owin.Extensions;
-using Microsoft.Owin.Security.OAuth;
+using Microsoft.Owin.Security;
 using Newtonsoft.Json;
 using Nop.Core.Infrastructure;
 using Nop.Plugin.Api.Attributes;
-using Nop.Plugin.Api.Constants;
-using Nop.Plugin.Api.Owin.Middleware;
-using Nop.Plugin.Api.Owin.OAuth.Providers;
+using Nop.Plugin.Api.Domain;
 using Nop.Plugin.Api.Swagger;
 using Owin;
-using Swashbuckle.Application;
 using Owin.Security.OAuth.Introspection;
-using Microsoft.Owin.Security;
+using Swashbuckle.Application;
+using System;
+using System.Net.Http;
+using System.Reflection;
 using System.Threading.Tasks;
-using System.IO;
-using Nop.Plugin.Api.Domain;
+using System.Web.Http;
+using System.Web.Http.Routing;
 
 namespace Nop.Plugin.Api
 {
@@ -46,8 +44,8 @@ namespace Nop.Plugin.Api
                 AuthenticationMode = AuthenticationMode.Active,
                 SaveToken = true,
                 Authority = settings.Authority ?? "http://localhost:5000",
-                ClientId = settings.ClientId ?? "MyClient",
-                ClientSecret = settings.ClientSecret ?? "MyClientSecret",
+                ClientId = settings.ClientId ?? "nopCommerce",
+                ClientSecret = settings.ClientSecret ?? "banana",
                 Events = new OAuthIntrospectionEvents
                 {
                     OnCreateTicket = context =>

@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Web.Http.ModelBinding;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Nop.Plugin.Api.Constants;
 using Nop.Plugin.Api.ModelBinders;
+using System.Collections.Generic;
+using System.Web.Http.ModelBinding;
 
 namespace Nop.Plugin.Api.Models.OrdersParameters
 {
@@ -16,6 +16,7 @@ namespace Nop.Plugin.Api.Models.OrdersParameters
             Limit = Configurations.DefaultLimit;
             Page = Configurations.DefaultPageValue;
             SinceId = Configurations.DefaultSinceId;
+            PartyId = 0;
             Fields = string.Empty;
         }
 
@@ -42,6 +43,12 @@ namespace Nop.Plugin.Api.Models.OrdersParameters
         /// </summary>
         [JsonProperty("since_id")]
         public int SinceId { get; set; }
+
+        /// <summary>
+        /// Restrict results to orders associated with a party ID
+        /// </summary>
+        [JsonProperty("party_id")]
+        public int PartyId { get; set; }
 
         /// <summary>
         /// comma-separated list of fields to include in the response

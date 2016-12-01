@@ -1,15 +1,12 @@
-﻿using System.Web.Routing;
-using Nop.Core;
-using Nop.Core.Domain.Localization;
+﻿using Nop.Core;
 using Nop.Core.Infrastructure;
 using Nop.Core.Plugins;
 using Nop.Plugin.Api.Data;
-using Nop.Plugin.Api.Helpers;
-using Nop.Services.Common;
-using Nop.Services.Configuration;
-using Nop.Web.Framework.Menu;
-using Nop.Services.Localization;
 using Nop.Plugin.Api.Domain;
+using Nop.Plugin.Api.Helpers;
+using Nop.Services.Configuration;
+using Nop.Services.Localization;
+using Nop.Web.Framework.Menu;
 
 namespace Nop.Plugin.Api.Plugin
 {
@@ -78,7 +75,7 @@ namespace Nop.Plugin.Api.Plugin
             {
                 Authority = "http://localhost:5000",
                 ClientId = "nopCommerce",
-                ClientSecret = "MyClientSecret"
+                ClientSecret = "banana"
             });
 
             //locales
