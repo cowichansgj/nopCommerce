@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Net.Http;
 using System.Reflection;
 using System.Web.Http;
@@ -81,6 +82,12 @@ namespace Nop.Plugin.Api
             {
                 NullValueHandling = NullValueHandling.Ignore
             };
+
+            config.Routes.MapHttpRoute(
+              name: "apiStatus",
+              routeTemplate: "api/status",
+              defaults: new { controller = "Status", action = "Get" },
+              constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) });
 
             config.Routes.MapHttpRoute(
               name: "customers",
@@ -368,9 +375,56 @@ namespace Nop.Plugin.Api
                 });
 
             app.UseWebApi(config);
-
+            RegisterWithConsul();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(EngineContext.Current.ContainerManager.Container);
         }
+
+        public void RegisterWithConsul()
+        {
+            using (var client = new HttpClient())
+            {
+                var nopCommerceAddress = ConfigurationManager.AppSettings["HostAddress"];
+                var nopCommercePort = int.Parse(ConfigurationManager.AppSettings["Port"]);
+                var nopCommerceUri = $"http://{nopCommerceAddress}:{nopCommercePort}/api/status";
+
+                var json = JsonConvert.SerializeObject(new ConsulRegistration
+                {
+                    ID = "ecommerceAPI",
+                    Name = "ecommerce",
+                    Address = nopCommerceAddress,
+                    Port = nopCommercePort,
+                    Tags = new[] {"urlprefix-/api"},
+                    Check = new ConsulRegistration.CheckDef
+                    {
+                        HTTP = nopCommerceUri
+                    }
+                });
+
+                var content = new StringContent(json);
+                var response = client.PutAsync($"http://{ConfigurationManager.AppSettings["ConsulHost"]}:8500/v1/agent/service/register", content)
+                    .GetAwaiter().GetResult();
+
+                response.EnsureSuccessStatusCode();
+            }
+        }
+    }
+
+    public class ConsulRegistration
+    {
+        public class CheckDef
+        {
+            public string Script { get; set; }
+            public string HTTP { get; set; }
+            public string Interval { get; set; } = "10s";
+        }
+
+        public string ID { get; set; }
+        public string Name { get; set; }
+        public string[] Tags { get; set; }
+        public string Address { get; set; }
+        public int Port { get; set; }
+        public CheckDef Check { get; set; }
+
     }
 }
 
