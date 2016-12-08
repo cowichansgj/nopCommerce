@@ -27,7 +27,7 @@ namespace Nop.Plugin.Commissions.ProductExtension.Controllers
 
             var productCommission = _productExtensionService.GetProductCommissionById((int)additionalData);
 
-            if(productCommission == null)
+            if(productCommission == null && (int)additionalData != 0)
             {
                 productCommission = new ProductCommission()
                 {
@@ -48,7 +48,10 @@ namespace Nop.Plugin.Commissions.ProductExtension.Controllers
             var productCommission = _productExtensionService.GetProductCommissionById(model.ProductId);
             Mapper.Map(model, productCommission);
 
-            _productExtensionService.UpdateProductCommission(productCommission);
+            if (productCommission.Id != 0)
+            {
+                _productExtensionService.UpdateProductCommission(productCommission);
+            }
 
             return Json(model);
         }
